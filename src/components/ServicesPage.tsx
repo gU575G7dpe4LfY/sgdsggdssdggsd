@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ArrowLeft, Eye, Users, Zap, Star, ChevronRight, Sparkles, Plus, Minus } from 'lucide-react';
+import { ArrowLeft, Eye, Users, Zap, Star, ChevronRight, Sparkles, Plus, Minus, Shield, CheckCircle, Lock, RefreshCw, Clock } from 'lucide-react';
 import { TikTokLogo, YouTubeLogo, InstagramLogo, XLogo } from './SocialLogos';
 import { PayPalLogo } from './PayPalLogo';
 import { USDTLogo, XRPLogo, SolanaLogo, DogecoinLogo } from './CryptoLogos';
-import { Shield, Clock, Zap, CheckCircle, Lock, RefreshCw } from 'lucide-react';
 
 interface ServicesPageProps {
   onBack: () => void;
@@ -465,15 +464,41 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onBack }) => {
           <div className="flex items-center justify-between mb-4 lg:mb-6">
             <button
               onClick={onBack}
-              className="group flex items-center gap-2 lg:gap-3 px-4 lg:px-6 py-2 lg:py-3 bg-black/60 backdrop-blur-xl
-                        border border-cyan-400/30 rounded-xl hover:border-cyan-400/60
+              className="group relative flex items-center gap-2 lg:gap-3 px-4 lg:px-6 py-2 lg:py-3 bg-black/60 backdrop-blur-xl
+                        border border-cyan-400/30 rounded-xl hover:border-cyan-400/60 overflow-hidden
                         text-cyan-400 font-mono font-bold tracking-wider text-sm lg:text-base
                         transition-all duration-500 ease-out
-                        hover:text-white hover:scale-105 hover:bg-black/80"
+                        hover:text-white hover:scale-105 hover:bg-black/80
+                        hover:shadow-lg hover:shadow-cyan-400/30"
               style={{ textShadow: '0 0 10px #00FFFF' }}
             >
+              {/* Effet Matrix au hover */}
+              <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-700">
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/10 via-cyan-400/20 to-cyan-400/10 animate-matrix-warp" />
+                
+                {/* Particules d'énergie */}
+                {[...Array(6)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="absolute w-0.5 h-0.5 bg-cyan-400/70 rounded-full animate-energy-particles"
+                    style={{
+                      left: `${10 + Math.random() * 80}%`,
+                      top: `${10 + Math.random() * 80}%`,
+                      animationDelay: `${i * 0.1}s`,
+                      animationDuration: `${1.5}s`
+                    }}
+                  />
+                ))}
+                
+                {/* Lignes de scan */}
+                <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400/80 to-transparent
+                               animate-shimmer" />
+                <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-cyan-400/80 to-transparent
+                               animate-shimmer" style={{ animationDelay: '0.5s' }} />
+              </div>
+              
               <ArrowLeft className="w-4 h-4 lg:w-5 lg:h-5 transition-transform duration-300 group-hover:-translate-x-1" />
-              <span>RETOUR</span>
+              <span className="relative z-10 group-hover:animate-hack-glitch-smooth">RETOUR</span>
             </button>
 
             {/* Moyens de paiement dans le header */}
@@ -498,7 +523,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onBack }) => {
                 MATRIX SERVICES
               </div>
               <div className="text-cyan-400/80 font-mono text-xs lg:text-sm tracking-wider">
-                GG EZ
+                Des bots de qualité à bas prix
               </div>
             </div>
           </div>
@@ -642,16 +667,6 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onBack }) => {
                       animationDelay: `${index * 0.2}s`
                     }}
                   >
-                    {/* Badge populaire */}
-                    {pkg.popular && (
-                      <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                        <div className={`bg-gradient-to-r ${currentNetwork?.gradient || 'from-cyan-400 to-red-400'} text-white text-xs font-bold 
-                                       px-2 lg:px-3 py-1 rounded-full shadow-lg flex items-center gap-1`}>
-                          <Sparkles className="w-2 h-2 lg:w-3 lg:h-3 fill-current" />
-                          <span className="tracking-wider">TOP</span>
-                        </div>
-                      </div>
-                    )}
 
                     {/* Effet Matrix au hover */}
                     <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-all duration-700">
@@ -821,11 +836,11 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onBack }) => {
                   <h3 className="text-xl lg:text-2xl font-bold font-mono text-white mb-2 tracking-[0.1em] flex items-center justify-center gap-3"
                       style={{ textShadow: '0 0 15px rgba(255,255,255,0.5)' }}>
                     <Shield className="w-6 h-6 lg:w-8 lg:h-8 text-red-400 animate-pulse" />
-                    GARANTIES & SÉCURITÉ
+                    GARANTIES
                     <Shield className="w-6 h-6 lg:w-8 lg:h-8 text-red-400 animate-pulse" />
                   </h3>
                   <p className="text-red-400/80 font-mono text-sm tracking-wider animate-pulse">
-                    Votre satisfaction est notre priorité absolue
+                    Bots 
                   </p>
                 </div>
 
@@ -846,7 +861,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onBack }) => {
                       <p className="text-gray-400 font-mono text-xs lg:text-sm leading-relaxed">
                         Démarrage sous 24h maximum
                         <br />
-                        <span className="text-red-400/80">Souvent en quelques heures</span>
+                        <span className="text-red-400/80">Temps moyen : 30 minutes</span>
                       </p>
                     </div>
                   </div>
@@ -863,12 +878,12 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onBack }) => {
                     <div className="relative z-10 text-center">
                       <Star className="w-8 h-8 lg:w-10 lg:h-10 text-red-400 mx-auto mb-3 group-hover:animate-pulse transition-transform duration-500 fill-current" />
                       <h4 className="text-white font-mono font-bold text-sm lg:text-base mb-2 tracking-wide">
-                        QUALITÉ PREMIUM
+                        HAUTE QUALITÉ
                       </h4>
                       <p className="text-gray-400 font-mono text-xs lg:text-sm leading-relaxed">
-                        Comptes réels et actifs
+                        Comptes de bonne qualité ayant de l'ancienneté et des publications
                         <br />
-                        <span className="text-red-400/80">Pas de bots ou faux comptes</span>
+                        <span className="text-red-400/80"></span>
                       </p>
                     </div>
                   </div>
@@ -885,10 +900,10 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onBack }) => {
                     <div className="relative z-10 text-center">
                       <Zap className="w-8 h-8 lg:w-10 lg:h-10 text-red-400 mx-auto mb-3 group-hover:animate-bounce transition-transform duration-500" />
                       <h4 className="text-white font-mono font-bold text-sm lg:text-base mb-2 tracking-wide">
-                        SUPPORT 24/7
+                        SUPPORT 6J/7
                       </h4>
                       <p className="text-gray-400 font-mono text-xs lg:text-sm leading-relaxed">
-                        Assistance instantanée
+                        Je suis disponible tous les jours la plus part du temps sauf le dimanche
                         <br />
                         <span className="text-red-400/80">Discord : arasaka.exe</span>
                       </p>
@@ -903,7 +918,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onBack }) => {
                     <CheckCircle className="w-5 h-5 lg:w-6 lg:h-6 text-green-400 flex-shrink-0 group-hover:animate-pulse" />
                     <div>
                       <div className="text-white font-mono font-bold text-sm lg:text-base">Garantie de remboursement</div>
-                      <div className="text-green-400/80 font-mono text-xs">Si non-livraison sous 48h</div>
+                      <div className="text-green-400/80 font-mono text-xs">Si non-livraison sous 24h</div>
                     </div>
                   </div>
 
@@ -923,7 +938,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onBack }) => {
                                  border border-red-400/40 rounded-lg backdrop-blur-sm">
                     <RefreshCw className="w-4 h-4 text-red-400 animate-spin" />
                     <span className="text-red-400 font-mono font-bold text-sm tracking-wide">
-                      Plus de 10,000 clients satisfaits
+                      D'autres sections seront bientôt rajoutées sur le site
                     </span>
                   </div>
                 </div>

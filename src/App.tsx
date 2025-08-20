@@ -70,11 +70,33 @@ function App() {
   };
 
   const handleBackToMain = () => {
+    // Démarrer la séquence de transition Matrix pour le retour vers l'accueil
     setIsTransitioningToServices(true);
+    setMatrixTransition(true);
+    
+    // Phase 1: Effet de glitch initial intense
+    setTimeout(() => {
+      setGlitchOverlay(true);
+    }, 50);
+    
+    // Phase 2: Activation des scanlines multiples
+    setTimeout(() => {
+      setScanlineActive(true);
+    }, 200);
+    
+    // Phase 3: Intensification des effets
+    setTimeout(() => {
+      // Ajouter plus d'effets visuels
+    }, 800);
+    
+    // Phase 4: Transition finale vers la page principale
     setTimeout(() => {
       setShowServices(false);
       setIsTransitioningToServices(false);
-    }, 800);
+      setMatrixTransition(false);
+      setScanlineActive(false);
+      setGlitchOverlay(false);
+    }, 1800);
   };
 
   const handleJailbreakClick = () => {
@@ -163,14 +185,143 @@ function App() {
   if (showServices) {
     return (
       <>
-        <ServicesPage onBack={handleBackToMain} />
-        <div className={`
-          fixed inset-0 z-40 pointer-events-none
-          transition-all duration-800 ease-out
-          ${isTransitioningToServices 
-            ? 'bg-gradient-to-r from-red-400/20 via-black to-red-400/20 opacity-0' 
-            : 'bg-transparent opacity-100'}
-        `} />
+        <div className={`transition-all duration-500 ease-out ${isTransitioningToServices ? 'opacity-0 scale-95 blur-sm' : 'opacity-100 scale-100'}`}>
+          <ServicesPage onBack={handleBackToMain} />
+        </div>
+        
+        {/* Overlay de transition Matrix pour le retour */}
+        {isTransitioningToServices && (
+          <>
+            {/* Pluie de code Matrix intensive pour le retour */}
+            <div className="fixed inset-0 pointer-events-none z-50">
+              {[...Array(80)].map((_, i) => (
+                <div
+                  key={i}
+                  className="absolute text-red-400 font-mono font-bold animate-matrix-rain"
+                  style={{
+                    left: `${Math.random() * 100}%`,
+                    fontSize: `${10 + Math.random() * 12}px`,
+                    animationDelay: `${Math.random() * 0.3}s`,
+                    animationDuration: `${0.6 + Math.random() * 0.4}s`,
+                    textShadow: '0 0 15px #FF0041, 0 0 30px #FF0041, 0 0 45px #FF0041'
+                  }}
+                >
+                  {['RETOUR', 'MATRIX', 'EXIT', 'HOME', '█', '▓', '▒', '░', '0', '1', 'X', '#'][Math.floor(Math.random() * 12)]}
+                </div>
+              ))}
+            </div>
+            
+            {/* Effet de glitch overlay intense */}
+            {glitchOverlay && (
+              <div className="fixed inset-0 pointer-events-none z-55">
+                <div className="absolute inset-0 bg-gradient-to-r from-red-400/30 via-transparent to-red-400/30 animate-hack-glitch-intense" />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-red-400/20 to-transparent animate-matrix-glitch-smooth" />
+                
+                {/* Lignes de glitch horizontales intenses */}
+                {[...Array(12)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="absolute w-full bg-red-400/40 animate-hack-glitch-smooth"
+                    style={{
+                      height: `${3 + Math.random() * 6}px`,
+                      top: `${Math.random() * 100}%`,
+                      animationDelay: `${i * 0.03}s`,
+                      filter: 'blur(1px)',
+                      boxShadow: '0 0 20px #FF0041'
+                    }}
+                  />
+                ))}
+                
+                {/* Effet de dissolution */}
+                <div className="absolute inset-0 bg-gradient-radial from-red-400/15 via-black/30 to-red-400/10 animate-matrix-dissolve" />
+              </div>
+            )}
+            
+            {/* Scanlines multiples pour le retour */}
+            {scanlineActive && (
+              <div className="fixed inset-0 pointer-events-none z-60">
+                {[...Array(8)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="absolute w-full bg-gradient-to-r from-transparent via-red-400 to-transparent animate-scan-transition"
+                    style={{
+                      height: `${2 + i}px`,
+                      animationDelay: `${i * 0.08}s`,
+                      animationDuration: '0.5s',
+                      opacity: 1 - (i * 0.1),
+                      filter: `blur(${i * 0.3}px)`,
+                      boxShadow: `0 0 ${15 + i * 8}px #FF0041`
+                    }}
+                  />
+                ))}
+                
+                {/* Scanlines verticales */}
+                {[...Array(5)].map((_, i) => (
+                  <div
+                    key={`v-${i}`}
+                    className="absolute h-full bg-gradient-to-b from-transparent via-red-400/80 to-transparent"
+                    style={{
+                      width: '3px',
+                      left: `${15 + i * 20}%`,
+                      animationDelay: `${0.15 + i * 0.08}s`,
+                      animation: 'scan-transition 0.7s ease-out',
+                      transform: 'rotate(90deg)',
+                      transformOrigin: 'center',
+                      filter: 'blur(1px)',
+                      boxShadow: '0 0 20px #FF0041'
+                    }}
+                  />
+                ))}
+              </div>
+            )}
+            
+            {/* Particules d'énergie Matrix pour le retour */}
+            <div className="fixed inset-0 pointer-events-none z-45">
+              {[...Array(40)].map((_, i) => (
+                <div
+                  key={i}
+                  className="absolute bg-red-400 rounded-full animate-energy-particles"
+                  style={{
+                    width: `${3 + Math.random() * 5}px`,
+                    height: `${3 + Math.random() * 5}px`,
+                    left: `${Math.random() * 100}%`,
+                    top: `${Math.random() * 100}%`,
+                    animationDelay: `${Math.random() * 0.4}s`,
+                    animationDuration: `${0.8 + Math.random() * 0.4}s`,
+                    boxShadow: '0 0 15px #FF0041, 0 0 30px #FF0041',
+                    filter: 'blur(0.5px)'
+                  }}
+                />
+              ))}
+            </div>
+            
+            {/* Effet de distorsion temporelle pour le retour */}
+            <div className="fixed inset-0 pointer-events-none z-40">
+              <div className="absolute inset-0 bg-gradient-to-br from-red-400/8 via-black/40 to-red-400/8 
+                             animate-matrix-pulse" 
+                   style={{
+                     filter: 'blur(3px)',
+                     mixBlendMode: 'screen'
+                   }} />
+            </div>
+            
+            {/* Message de transition */}
+            <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-65 pointer-events-none">
+              <div className="text-center">
+                <div className="text-4xl md:text-6xl font-bold font-mono text-red-400 mb-4 tracking-[0.2em] animate-hack-glitch-intense"
+                     style={{ 
+                       textShadow: '0 0 30px #FF0041, 0 0 60px #FF0041, 0 0 90px #FF0041',
+                       filter: 'drop-shadow(0 0 20px rgba(255,0,65,0.8))'
+                     }}>
+                  RETOUR
+                </div>
+                <div className="text-red-400/80 font-mono text-lg tracking-[0.3em] animate-pulse">
+                  REDIRECTION EN COURS...
+                </div>
+              </div>
+            </div>
+          </>
+        )}
       </>
     );
   }
